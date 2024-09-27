@@ -1,2 +1,47 @@
-<h1>Orders#new</h1>
-<p>Find me in app/views/orders/new.html.erb</p>
+<h1 class="text-center">Creating order <%= @next_order_id %> for <%= @business.name %></h1>
+
+<%= form_with model: @order, local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :name, "Order Name" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div id="product-fields">
+    <div class="product-field">
+      <div class="form-group">
+        <label for="product_name">Product Name</label>
+        <%= select_tag "product_name[]", options_from_collection_for_select(@products, :name, :name), class: "form-control", prompt: "Select a product" %>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <%= text_field_tag "quantity[]", nil, class: "form-control", size: 5 %>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-dark" id="add-product">Add Product</button>
+  <br><br>
+  <%= form.submit "Create Order", class: "btn btn-dark" %>
+<% end %>
+
+<script>
+  document.getElementById("add-product").addEventListener("click", function() {
+    const productFields = document.getElementById("product-fields");
+    const newProductField = document.createElement("div");
+    newProductField.className = "product-field";
+    newProductField.innerHTML = `
+      <div class="form-group">
+        <label for="product_name">Product Name</label>
+        <select name="product_name[]" class="form-control">
+          <option value="">Select a product</option>
+          <%= options_for_select(@products.map { |p| [p.name, p.id] }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="text" name="quantity[]" class="form-control" size="5">
+      </div>
+    `;
+    productFields.appendChild(newProductField);
+  });
+</script>
