@@ -5,8 +5,21 @@ class SuppliesController < ApplicationController
   end
 
   def new
+    @business = current_user.business
+    @next_supply_id = Supply.last&.id.to_i + 1 # O un método alternativo para obtener el próximo ID
+    @supply = Supply.new
   end
 
+  def create
+    @supply = Supply.new(supply_params)
+    @supply.business = current_user.business
+
+    if @supply.save
+      redirect_to supplies_path, notice: 'Supply was successfully created.'
+    else
+      render :new
+    end
+  end
   def edit
   end
 
@@ -16,5 +29,8 @@ class SuppliesController < ApplicationController
 
   def set_business
     @business = current_user.business
+  end
+  def supply_params
+    params.require(:supply).permit(:name, :tipo1, :tipo2, :tipo3, :cost, :stock)
   end
 end

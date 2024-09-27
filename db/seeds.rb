@@ -7,6 +7,7 @@ vicente = User.create(email: 'vicho@gmail.com', password: 'skibidi', business: c
 # Crear insumos (supplies)
 poleras = 5.times.map do |i|
   Supply.create(
+    name: "Polera color#{i + 1} talla S",
     business: cutefits,
     cost: 2990,
     stock: 3,
@@ -23,7 +24,8 @@ impresion_supplies = %w[A B C D E].map do |letra|
     stock: 3,
     tipo1: letra,
     tipo2: 'DTF',
-    tipo3: nil
+    tipo3: nil,
+    name: "Diseño DTF #{letra}"
   )
 end
 

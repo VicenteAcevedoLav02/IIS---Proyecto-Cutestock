@@ -20,7 +20,7 @@
             <% @supply_lists.each do |supply_list| %>
             <% if supply_list.product_id == product.id %>
                 <% supply_list.supplies.each do |supply| %>
-                <li><%= supply.id %></li>
+                <li><%= supply.name %></li>
                  <% end %>
               <% end %>
             <% end %>
@@ -37,4 +37,4 @@
   </tbody>
 </table>
 
-<button class="btn btn-dark">Create new Product</button>
+<%= link_to 'Create new Product', new_product_path, class: 'btn btn-dark' %> <!-- Enlace agregado -->
