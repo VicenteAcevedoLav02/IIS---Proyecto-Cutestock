@@ -6,13 +6,13 @@
     <%= form.text_field :name, class: "form-control", required: true %>
   </div>
 
-  <div id="product-fields">
-    <div class="product-field">
-      <div class="form-group">
+  <div id="product-fields" class="mb-3">
+    <div class="product-field row align-items-center mb-2">
+      <div class="col-md-8">
         <label for="product_name">Product Name</label>
         <%= select_tag "product_name[]", options_from_collection_for_select(@products, :name, :name), class: "form-control", prompt: "Select a product" %>
       </div>
-      <div class="form-group">
+      <div class="col-md-4">
         <label for="quantity">Quantity</label>
         <%= text_field_tag "quantity[]", nil, class: "form-control", size: 5 %>
       </div>
@@ -28,16 +28,16 @@
   document.getElementById("add-product").addEventListener("click", function() {
     const productFields = document.getElementById("product-fields");
     const newProductField = document.createElement("div");
-    newProductField.className = "product-field";
+    newProductField.className = "product-field row align-items-center mb-2";
     newProductField.innerHTML = `
-      <div class="form-group">
+      <div class="col-md-8">
         <label for="product_name">Product Name</label>
         <select name="product_name[]" class="form-control">
           <option value="">Select a product</option>
-          <%= options_for_select(@products.map { |p| [p.name, p.id] }) %>
+          <%= options_for_select(@products.map { |p| [p.name, p.name] }) %>
         </select>
       </div>
-      <div class="form-group">
+      <div class="col-md-4">
         <label for="quantity">Quantity</label>
         <input type="text" name="quantity[]" class="form-control" size="5">
       </div>

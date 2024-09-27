@@ -15,11 +15,18 @@ class OrdersController < ApplicationController
   end
 
   def create
+    puts("PARAMS!")
+    puts(params.inspect)
+    puts("PARAMS!")
     @business = current_user.business
     product_names = params[:product_name]
     quantities = params[:quantity].map(&:to_i)
     
-    products = Product.where(name: product_names)
+    products = Product.where(name: product_names).to_a
+    puts("PRODUCTS!")
+    puts(products.inspect)
+    puts("QUANTITIES!")
+    puts(quantities)
     total_price = products.each_with_index.sum { |product, index| product.price * quantities[index] }
     
     @order = Order.new(order_params)
@@ -30,11 +37,26 @@ class OrdersController < ApplicationController
 
     if @order.save
       product_list = ProductList.create(order: @order)
+    
       product_names.each_with_index do |name, index|
         product = products.find { |p| p.name == name }
-        product_list.products << product if product && quantities[index] > 0
+        puts("PRODUCT VAR:")
+        puts(product.inspect)
+    
+        # Agregar el producto según la cantidad
+        if product && quantities[index] > 0
+          quantities[index].times do
+            product_list.products << product
+          end
+        end
       end
+
+
+  
       
+
+      puts("PRODUCT LIST OFFICIALLY:")
+      puts(product_list.products.inspect)
       redirect_to orders_path, notice: "Order created successfully."
     else
       render :new

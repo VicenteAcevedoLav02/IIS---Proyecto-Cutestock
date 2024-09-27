@@ -29,27 +29,36 @@ end
 
 # Crear 5 productos, cada uno con una polera y una impresión
 products = []
+created_product_names = Set.new # Usamos un conjunto para rastrear los nombres de los productos creados
+
 5.times do
   polera = poleras.sample
   impresion = impresion_supplies.sample
 
   product_name = "Polera #{polera.tipo2} + Impresión #{impresion.tipo1}"
-  
-  product = Product.create(
-    business: cutefits,
-    price: (polera.cost + impresion.cost) * 2, # Precio basado en los costos
-    name: product_name
-  )
 
-  # Crear SupplyList para este producto y agregar la polera y la impresión
-  supply_list = SupplyList.create(product: product)
-  supply_list.supplies << polera
-  supply_list.supplies << impresion
+  # Verificar si el producto ya fue creado
+  unless created_product_names.include?(product_name)
+    product = Product.create(
+      business: cutefits,
+      price: (polera.cost + impresion.cost) * 2, # Precio basado en los costos
+      name: product_name
+    )
 
-  products << product
-  puts("LISTA DE PRODUCTOS CREADOS POR LA SEED")
-  puts(products.inspect)
+    # Crear SupplyList para este producto y agregar la polera y la impresión
+    supply_list = SupplyList.create(product: product)
+    supply_list.supplies << polera
+    supply_list.supplies << impresion
+
+    products << product
+    created_product_names.add(product_name) # Añadir el nombre del producto al conjunto
+    puts("LISTA DE PRODUCTOS CREADOS POR LA SEED")
+    puts(products.inspect)
+  else
+    puts("El producto '#{product_name}' ya existe, no se creará nuevamente.")
+  end
 end
+
 
 # Crear una orden
 order = Order.create(
