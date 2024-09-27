@@ -1,0 +1,34 @@
+<h1 class="text-center">Stocks for supplies of <%= @business.name %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type1</th>
+      <th>Type2</th>
+      <th>Type3</th>
+      <th>Stock</th>
+      <th>Cost</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @supplies.each do |supply| %>
+      <tr>
+        <td><%= supply.id %></td>
+        <td><%= supply.tipo1 || "No type declared." %></td>
+        <td><%= supply.tipo2 || "No type declared." %></td>
+        <td><%= supply.tipo3 || "No type declared." %></td>
+        <td><%= supply.stock %></td>
+        <td><%= supply.cost %></td>
+        <td>
+          <button class="btn btn-dark">View</button>
+          <button class="btn btn-dark">Edit</button>
+          <button class="btn btn-dark">Delete</button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<button class="btn btn-dark">Create new Supply</button>

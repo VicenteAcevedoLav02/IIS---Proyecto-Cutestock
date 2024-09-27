@@ -75,20 +75,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_023758) do
     t.index ["supply_list_id"], name: "index_supplies_supply_lists_on_supply_list_id"
   end
 
-  create_table "supply_list_supplies", force: :cascade do |t|
-    t.bigint "supply_list_id", null: false
-    t.bigint "supply_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["supply_id"], name: "index_supply_list_supplies_on_supply_id"
-    t.index ["supply_list_id"], name: "index_supply_list_supplies_on_supply_list_id"
-  end
-
   create_table "supply_lists", force: :cascade do |t|
     t.bigint "product_id", null: false
+    t.bigint "supply_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_supply_lists_on_product_id"
+    t.index ["supply_id"], name: "index_supply_lists_on_supply_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -110,8 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_023758) do
   add_foreign_key "product_lists", "products"
   add_foreign_key "products", "businesses"
   add_foreign_key "supplies", "businesses"
-  add_foreign_key "supply_list_supplies", "supplies"
-  add_foreign_key "supply_list_supplies", "supply_lists"
   add_foreign_key "supply_lists", "products"
+  add_foreign_key "supply_lists", "supplies"
   add_foreign_key "users", "businesses"
 end

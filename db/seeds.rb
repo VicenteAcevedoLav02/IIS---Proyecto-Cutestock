@@ -2,7 +2,7 @@
 cutefits = Business.create(name: 'Cutefits')
 
 # Crear usuario
-vicente = User.create(email: 'vicho@gmail.com', password: '123456', business: cutefits)
+vicente = User.create(email: 'vicho@gmail.com', password: 'skibidi', business: cutefits)
 
 # Crear insumos (supplies)
 poleras = 5.times.map do |i|
@@ -47,6 +47,8 @@ products = []
   supply_list.supplies << impresion
 
   products << product
+  puts("LISTA DE PRODUCTOS CREADOS POR LA SEED")
+  puts(products.inspect)
 end
 
 # Crear una orden
@@ -61,5 +63,9 @@ order = Order.create(
 # Crear una ProductList y asociar los productos a la orden
 product_list = ProductList.create(order: order)
 product_list.products << products
+
+puts("LISTA DE PRODUCTOS CREADA POR LA SEED")
+  puts(product_list.products.inspect)
+
 
 puts "Seed de cutefits exitosa"

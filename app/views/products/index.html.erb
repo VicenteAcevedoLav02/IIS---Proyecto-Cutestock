@@ -1,0 +1,40 @@
+<h1 class="text-center">Products created for <%= @business.name %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Supplies</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.id %></td>
+        <td><%= product.name %></td>
+        <td>
+          <ul>
+            <% @supply_lists.each do |supply_list| %>
+            <% if supply_list.product_id == product.id %>
+                <% supply_list.supplies.each do |supply| %>
+                <li><%= supply.id %></li>
+                 <% end %>
+              <% end %>
+            <% end %>
+          </ul>
+        </td>
+        <td><%= product.price %></td>
+        <td>
+          <button class="btn btn-dark">View</button>
+          <button class="btn btn-dark">Edit</button>
+          <button class="btn btn-dark">Delete</button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<button class="btn btn-dark">Create new Product</button>

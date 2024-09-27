@@ -43,8 +43,17 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <div class="navbar-nav">
         <% if user_signed_in? %>
-          <a class="nav-link text-white" href="#">
-            Logeado In!
+          <a class="nav-link text-white" href="orders#index">
+            Orders
+          </a>
+          <a class="nav-link text-white" href="products#index">
+            Products
+          </a>
+          <a class="nav-link text-white" href="supplies#index">
+            Stocks
+          </a>
+          <a class="nav-link text-white" href="fees#index">
+            Fees
           </a>
         <% else %>
           <a class="nav-link text-white" href="#">
@@ -59,27 +68,35 @@
   </a>
 
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-    <% if user_signed_in? %>
-      <li>
-  <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { turbo_confirm: 'Are you sure you want to Log out?' }, class: 'dropdown-item' %>
-</li>
+    <% if user_signed_in?%>
+        
+        
+          <li>
+            <a class="dropdown-item" href="/users/sign_out">
+              <i class="bi bi-box-arrow-right"></i>
+              Logers Out
+            </a>
+          </li>
+            
 
-    <% else %>
-      <li>
-        <a class="dropdown-item" href="/users/sign_in">
-          <i class="bi bi-box-arrow-right"></i>
-          Log In
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-item" href="/users/sign_up">
-          <i class="bi bi-box-arrow-right"></i>
-          Sign Up
-        </a>
-      </li>
-    <% end %>
-  </ul>
-</div>
+        <% else %>
+
+          <li>
+            <a class="dropdown-item" href="/users/sign_in">
+              <i class="bi bi-box-arrow-right"></i>
+              Log In
+            </a>
+          </li>
+          
+          <li>
+            <a class="dropdown-item" href="/users/sign_up">
+              <i class="bi bi-box-arrow-right"></i>
+              Sign Up
+            </a>
+          </li>
+
+        <% end %>
+      </ul>
 
     </div>
   </div>

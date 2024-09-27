@@ -1,0 +1,38 @@
+<h1 class="text-center">¡Welcome, <%= @business.name %>!</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Products</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td>
+          <ul>
+            <% @product_lists.each do |product_list| %>
+              <% product_list.products.each do |product| %>
+               <% if product_list.order_id == order.id %>
+                <li><%= product.name %></li>
+                 <% end %>
+              <% end %>
+            <% end %>
+          </ul>
+        </td>
+        <td><%= order.price %></td>
+        <td>
+          <button class="btn btn-dark">View</button>
+          <button class="btn btn-dark">Edit</button>
+          <button class="btn btn-dark">Delete</button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<button class="btn btn-dark">Create new Order</button>
