@@ -1,0 +1,89 @@
+<head>
+  <%= stylesheet_link_tag 'application', media: 'all', rel: 'stylesheet' %>
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .dropdown-toggle {
+      font-size: 50px; /* or desired size */
+    }
+
+    .container-fluid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-link {
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+    
+    .nav-link-large {
+      font-size: 2rem; /* Adjust font-size as desired */
+    }
+
+    .dropdown-menu-arial-black {
+      font-family: 'Arial', sans-serif; /* Specify the font family */
+    }
+  </style>
+</head>
+
+
+<nav class="navbar navbar-expand-lg" style="background-color: #000;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <%= image_tag("cutestocknb.png", alt: "navbarlogo", size: "170x80") %>
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav">
+        <% if user_signed_in? %>
+          <a class="nav-link text-white" href="#">
+            Logeado In!
+          </a>
+        <% else %>
+          <a class="nav-link text-white" href="#">
+            No Logeado In!
+          </a>
+        <% end %>
+      </div>
+
+ <div class="dropdown ms-auto">
+  <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-person-circle"></i>
+  </a>
+
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+    <% if user_signed_in? %>
+      <li>
+  <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { turbo_confirm: 'Are you sure you want to Log out?' }, class: 'dropdown-item' %>
+</li>
+
+    <% else %>
+      <li>
+        <a class="dropdown-item" href="/users/sign_in">
+          <i class="bi bi-box-arrow-right"></i>
+          Log In
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="/users/sign_up">
+          <i class="bi bi-box-arrow-right"></i>
+          Sign Up
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Bootstrap Bundle with Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
