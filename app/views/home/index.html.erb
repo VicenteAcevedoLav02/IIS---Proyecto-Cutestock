@@ -1,0 +1,20 @@
+<h1 class="text-center">Stock Alerts</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Supply Name</th>
+      <th>Stock</th>
+      <th>Required</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @low_stock_supplies.each do |supply| %>
+      <tr>
+        <td><%= supply.name %></td>
+        <td><%= supply.stock %></td>
+        <td><%= supply.requires %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

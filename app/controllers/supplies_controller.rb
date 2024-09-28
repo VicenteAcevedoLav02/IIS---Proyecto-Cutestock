@@ -43,6 +43,6 @@ class SuppliesController < ApplicationController
     @business = current_user.business
   end
   def supply_params
-    params.require(:supply).permit(:name, :tipo1, :tipo2, :tipo3, :cost, :stock)
+    params.require(:supply).permit(:name, :tipo1, :tipo2, :tipo3, :cost, :stock, :requires)
   end
 end

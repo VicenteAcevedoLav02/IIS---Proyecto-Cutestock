@@ -102,14 +102,35 @@ class OrdersController < ApplicationController
 
   def progress_state
     @order = Order.find(params[:id])
-    
+  
     if @order.state == 'Pending'
+      # Cambiar el estado de la orden a Completed
       @order.update(state: 'Completed')
-      redirect_to orders_path, notice: 'Order state updated to Completed.'
+  
+      # Acceder a la lista de productos de la orden
+      product_list = ProductList.find_by(order_id: @order.id)
+  
+      products = product_list.products
+
+      puts("Productos de la orden: ", products.inspect)
+      products.each do |product|
+
+      supply_list = SupplyList.find_by(product_id: product.id)
+      supplies = supply_list.supplies
+      # Descontar 1 al stock de cada suministro
+      supplies.each do |supply|
+        puts("SUPPLY: ", supply.inspect)
+        supply.update(stock: supply.stock - 1) if supply.stock > 0
+        end
+
+      end
+  
+      redirect_to orders_path, notice: 'Order state updated to Completed and supplies updated.'
     else
       redirect_to orders_path, alert: 'Order state cannot be updated.'
     end
   end
+  
   
   private
   

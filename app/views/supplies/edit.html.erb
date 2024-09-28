@@ -31,5 +31,10 @@
     <%= form.number_field :stock, class: "form-control", value: @supply.stock %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :requires, "Requires" %>
+    <%= form.number_field :requires, class: "form-control", value: @supply.requires %>
+  </div>
+
   <%= form.submit "Update supply", class: "btn btn-dark" %>
 <% end %>

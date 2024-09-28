@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_28_005513) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_28_011901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_28_005513) do
     t.string "tipo2"
     t.string "tipo3"
     t.string "name"
+    t.integer "requires"
     t.index ["business_id"], name: "index_supplies_on_business_id"
   end
 

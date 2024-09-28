@@ -13,7 +13,8 @@ poleras = 5.times.map do |i|
     stock: 3,
     tipo1: 'Polera',
     tipo2: "Color#{i + 1}", # Diferentes colores
-    tipo3: 'S'
+    tipo3: 'S',
+    requires: 1
   )
 end
 
@@ -25,7 +26,8 @@ impresion_supplies = %w[A B C D E].map do |letra|
     tipo1: letra,
     tipo2: 'DTF',
     tipo3: nil,
-    name: "Diseño DTF #{letra}"
+    name: "Diseño DTF #{letra}",
+    requires: 1
   )
 end
 
