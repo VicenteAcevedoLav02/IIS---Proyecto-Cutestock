@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :authenticate_user!
   def index
     @business = current_user.business
     @supplies = Supply.where(business_id: @business.id)
