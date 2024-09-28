@@ -38,9 +38,30 @@ class ProductsController < ApplicationController
       render :new
     end
   end
-
   def edit
+    @business = current_user.business
+    @product = Product.find(params[:id])
+    @supplies = Supply.all
   end
+  
+  def update
+    @product = Product.find(params[:id])
+    if @product.update(product_params)
+      # Actualizar la supply list
+      @product.supply_list.supplies.clear # Limpiar los insumos actuales
+      supply_names = params[:supply_name]
+      supply_names.each do |name|
+        supply = Supply.find_by(name: name)
+        @product.supply_list.supplies << supply if supply
+      end
+  
+      redirect_to products_path, notice: 'Product was successfully updated.'
+    else
+      @supplies = Supply.all
+      render :edit
+    end
+  end
+  
 
   def show
   end

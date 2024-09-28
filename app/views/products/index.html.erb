@@ -29,7 +29,7 @@
         <td><%= product.price %></td>
         <td>
           <button class="btn btn-dark">View</button>
-          <button class="btn btn-dark">Edit</button>
+          <%= link_to 'Edit', edit_product_path(product), class: 'btn btn-dark' %> <!-- Enlace agregado -->
           <button class="btn btn-dark">Delete</button>
         </td>
       </tr>

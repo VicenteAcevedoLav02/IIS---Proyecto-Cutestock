@@ -21,6 +21,18 @@ class SuppliesController < ApplicationController
     end
   end
   def edit
+    @business = current_user.business
+    @supply = Supply.find(params[:id])
+  end
+
+  def update
+    @business = current_user.business
+    @supply = Supply.find(params[:id])
+    if @supply.update(supply_params)
+      redirect_to supplies_path, notice: 'Supply was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def show

@@ -1,2 +1,49 @@
-<h1>Orders#edit</h1>
-<p>Find me in app/views/orders/edit.html.erb</p>
+<h1 class="text-center">Editing Order <%= @order.id %> for <%= @business.name %></h1>
+
+<%= form_with model: @order, url: order_path(@order), local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :name, "Order Name" %>
+    <%= form.text_field :name, class: "form-control", required: true, value: @order.name %>
+  </div>
+
+  <div id="product-fields" class="mb-3">
+    <% @order.product_list.products.each_with_index do |product, index| %>
+      <div class="product-field row align-items-center mb-2">
+        <div class="col-md-8">
+          <label for="product_name">Product Name</label>
+          <%= select_tag "product_name[]", options_from_collection_for_select(@products, :name, :name, product.name), class: "form-control" %>
+        </div>
+        <div class="col-md-4">
+          <label for="quantity">Quantity</label>
+          <%= text_field_tag "quantity[]", @order_quantities[index], class: "form-control", size: 5 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <button type="button" class="btn btn-dark" id="add-product">Add Product</button>
+  <br><br>
+  <%= form.submit "Update Order", class: "btn btn-dark" %>
+<% end %>
+
+<script>
+  document.getElementById("add-product").addEventListener("click", function() {
+    const productFields = document.getElementById("product-fields");
+    const newProductField = document.createElement("div");
+    newProductField.className = "product-field row align-items-center mb-2";
+    newProductField.innerHTML = `
+      <div class="col-md-8">
+        <label for="product_name">Product Name</label>
+        <select name="product_name[]" class="form-control">
+          <option value="">Select a product</option>
+          <%= options_for_select(@products.map { |p| [p.name, p.name] }) %>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="quantity">Quantity</label>
+        <input type="text" name="quantity[]" class="form-control" size="5">
+      </div>
+    `;
+    productFields.appendChild(newProductField);
+  });
+</script>

@@ -62,11 +62,50 @@ class OrdersController < ApplicationController
       render :new
     end
   end
-
-  def show
+  def edit
+    @business = current_user.business
+    @order = Order.find(params[:id])
+    @products = Product.all
+    @order_quantities = calculate_quantities(@order)
   end
+  
+  def update
+    @order = Order.find(params[:id])
+    product_names = params[:product_name]
+    quantities = params[:quantity].map(&:to_i)
+  
+    products = Product.where(name: product_names).to_a
+    total_price = products.each_with_index.sum { |product, index| product.price * quantities[index] }
+  
+    @order.update(name: order_params[:name], price: total_price)
+  
+    # Actualizar la product_list asociada
+    product_list = @order.product_list
+    product_list.products.clear
+  
+    product_names.each_with_index do |name, index|
+      product = products.find { |p| p.name == name }
+      if product && quantities[index] > 0
+        quantities[index].times do
+          product_list.products << product
+        end
+      end
+    end
+  
+    if @order.save
+      redirect_to orders_path, notice: 'Order was successfully updated.'
+    else
+      render :edit
+    end
+  end
+  
   private
+  
+  def calculate_quantities(order)
+    order.product_list.products.group_by(&:id).transform_values(&:count).values
+  end
 
+  
   def set_business
     @business = current_user.business
   end
