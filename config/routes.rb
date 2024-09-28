@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :products
   resources :supplies
+  get 'orders/:id/progress_state', to: 'orders#progress_state', as: 'progress_order'
 
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

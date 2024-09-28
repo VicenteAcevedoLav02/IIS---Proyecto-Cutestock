@@ -68,7 +68,8 @@ order = Order.create(
   name: 'Primera Orden',
   price: products.sum(&:price),
   production_cost: products.sum { |p| p.supplies.sum(&:cost) },
-  net_profit: products.sum(&:price) - products.sum { |p| p.supplies.sum(&:cost) }
+  net_profit: products.sum(&:price) - products.sum { |p| p.supplies.sum(&:cost) },
+  state: "Pending"
 )
 
 # Crear una ProductList y asociar los productos a la orden

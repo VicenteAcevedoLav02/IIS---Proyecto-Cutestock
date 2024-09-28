@@ -34,6 +34,7 @@ class OrdersController < ApplicationController
     @order.price = total_price
     @order.production_cost = 1 # Default value
     @order.net_profit = 1 # Default value
+    @order.state = "Pending" #Default!!
 
     if @order.save
       product_list = ProductList.create(order: @order)
@@ -61,7 +62,7 @@ class OrdersController < ApplicationController
     else
       render :new
     end
-  end
+  end 
   def edit
     @business = current_user.business
     @order = Order.find(params[:id])
@@ -96,6 +97,17 @@ class OrdersController < ApplicationController
       redirect_to orders_path, notice: 'Order was successfully updated.'
     else
       render :edit
+    end
+  end
+
+  def progress_state
+    @order = Order.find(params[:id])
+    
+    if @order.state == 'Pending'
+      @order.update(state: 'Completed')
+      redirect_to orders_path, notice: 'Order state updated to Completed.'
+    else
+      redirect_to orders_path, alert: 'Order state cannot be updated.'
     end
   end
   

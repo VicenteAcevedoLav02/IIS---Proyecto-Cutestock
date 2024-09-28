@@ -6,8 +6,9 @@
       <th>ID</th>
       <th>Products</th>
       <th>Price</th>
+      <th>State</th>
       <th>Actions</th>
-    </tr>
+     </tr>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
@@ -25,11 +26,17 @@
           </ul>
         </td>
         <td><%= order.price %></td>
-        <td>
-          <button class="btn btn-dark">View</button>
-          <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %> <!-- Enlace agregado -->
-          <button class="btn btn-dark">Delete</button>
-        </td>
+         <td><%= order.state %></td>
+      <td>
+  <button class="btn btn-dark">View</button>
+  <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %> 
+  <button class="btn btn-dark">Delete</button>
+
+  <% if order.state == 'Pending' %>
+     <%= link_to 'Progress state', progress_order_path(order), class: 'btn btn-dark' %>
+  <% end %>
+</td>
+
       </tr>
     <% end %>
   </tbody>
