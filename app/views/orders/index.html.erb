@@ -29,8 +29,10 @@
          <td><%= order.state %></td>
       <td>
   <button class="btn btn-dark">View</button>
-  <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %> 
-  <button class="btn btn-dark">Delete</button>
+  <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %>
+  <div class='d-inline-block'>
+    <%= button_to 'Delete', order_path(order), method: 'delete', class: 'btn btn-dark' %>
+  </div>
 
   <% if order.state == 'Pending' %>
      <%= link_to 'Progress state', progress_order_path(order), class: 'btn btn-dark' %>

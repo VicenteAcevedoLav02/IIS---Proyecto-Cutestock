@@ -1,3 +1,9 @@
+<style>
+  .inline-btn {
+    display: inline-block;
+  }
+</style>
+
 <h1 class="text-center">Stocks for supplies of <%= @business.name %></h1>
 
 <table class="table">
@@ -24,7 +30,9 @@
         <td>
           <button class="btn btn-dark">View</button>
           <%= link_to 'Edit', edit_supply_path(supply), class: 'btn btn-dark' %> <!-- Enlace agregado -->
-          <button class="btn btn-dark">Delete</button>
+          <div class='d-inline-block'>
+            <%= button_to 'Delete', supply_path(supply), method: 'delete', class: 'btn btn-dark' %>
+          </div>
         </td>
       </tr>
     <% end %>

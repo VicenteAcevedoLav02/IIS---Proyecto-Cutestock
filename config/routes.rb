@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'orders/edit'
   get 'orders/show'
   get 'home/index'
+  get 'fees', to: 'home#index' # not really clear about the importance of "fees"
   resources :orders
   resources :products
   resources :supplies

@@ -130,8 +130,18 @@ class OrdersController < ApplicationController
       redirect_to orders_path, alert: 'Order state cannot be updated.'
     end
   end
-  
-  
+
+  def destroy
+    @order = Order.find(params[:id])
+    if @order.destroy
+      flash[:success] = 'Object was successfully deleted.'
+      redirect_to orders_url
+    else
+      flash[:error] = 'Something went wrong'
+      redirect_to orders_url
+    end
+  end
+    
   private
   
   def calculate_quantities(order)

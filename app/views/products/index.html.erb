@@ -30,7 +30,9 @@
         <td>
           <button class="btn btn-dark">View</button>
           <%= link_to 'Edit', edit_product_path(product), class: 'btn btn-dark' %> <!-- Enlace agregado -->
-          <button class="btn btn-dark">Delete</button>
+          <div class='d-inline-block'>
+            <%= button_to 'Delete', product_path(product), method: 'delete', class: 'btn btn-dark' %>
+          </div>
         </td>
       </tr>
     <% end %>

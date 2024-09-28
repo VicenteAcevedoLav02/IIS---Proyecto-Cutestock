@@ -37,6 +37,18 @@ class SuppliesController < ApplicationController
 
   def show
   end
+
+  def destroy
+    @supply = Supply.find(params[:id])
+    if @supply.destroy
+      flash[:success] = 'Object was successfully deleted.'
+      redirect_to supplies_url
+    else
+      flash[:error] = 'Something went wrong'
+      redirect_to supplies_url
+    end
+  end
+  
   private
 
   def set_business
