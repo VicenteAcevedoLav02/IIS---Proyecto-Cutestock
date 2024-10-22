@@ -7,15 +7,15 @@
   </div>
 
   <div id="product-fields" class="mb-3">
-    <% @order.product_list.products.each_with_index do |product, index| %>
+    <% @order_quantities.each do |product_name, quantity| %>
       <div class="product-field row align-items-center mb-2">
         <div class="col-md-8">
           <label for="product_name">Product Name</label>
-          <%= select_tag "product_name[]", options_from_collection_for_select(@products, :name, :name, product.name), class: "form-control" %>
+          <%= select_tag "product_name[]", options_from_collection_for_select(@products.uniq { |p| p.name }, :name, :name, product_name), class: "form-control" %>
         </div>
         <div class="col-md-4">
           <label for="quantity">Quantity</label>
-          <%= text_field_tag "quantity[]", @order_quantities[index], class: "form-control", size: 5 %>
+          <%= text_field_tag "quantity[]", quantity, class: "form-control", size: 5 %>
         </div>
       </div>
     <% end %>
@@ -36,7 +36,7 @@
         <label for="product_name">Product Name</label>
         <select name="product_name[]" class="form-control">
           <option value="">Select a product</option>
-          <%= options_for_select(@products.map { |p| [p.name, p.name] }) %>
+          <%= options_for_select(@products.uniq { |p| p.name }.map { |p| [p.name, p.name] }) %>
         </select>
       </div>
       <div class="col-md-4">
@@ -47,3 +47,4 @@
     productFields.appendChild(newProductField);
   });
 </script>
+

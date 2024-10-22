@@ -145,9 +145,9 @@ class OrdersController < ApplicationController
   private
   
   def calculate_quantities(order)
-    order.product_list.products.group_by(&:id).transform_values(&:count).values
+    # Count the number of instances of each product in the order using the join table
+    order.product_list.products.group(:name).count
   end
-
   
   def set_business
     @business = current_user.business
