@@ -77,7 +77,8 @@ Rails.application.configure do
   config.web_console.permissions = '176.65.128.66' # pal digital ocean
 
   config.hosts << "cutefits.duckdns.org:3000"
-
+  config.hosts << "http://cutefits.duckdns.org:3000/"
   config.hosts << "cutestock.duckdns.org:3000"
+  config.hosts << "http://cutestock.duckdns.org:3000/"
 
 end
