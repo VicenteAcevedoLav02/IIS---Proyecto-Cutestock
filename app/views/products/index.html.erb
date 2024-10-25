@@ -18,18 +18,18 @@
         <td>
           <ul>
             <% @supply_lists.each do |supply_list| %>
-            <% if supply_list.product_id == product.id %>
+              <% if supply_list.product_id == product.id %>
                 <% supply_list.supplies.each do |supply| %>
-                <li><%= supply.name %></li>
-                 <% end %>
+                  <li><%= supply.name %></li>
+                <% end %>
               <% end %>
             <% end %>
           </ul>
         </td>
         <td><%= product.price %></td>
         <td>
-          <button class="btn btn-dark">View</button>
-          <%= link_to 'Edit', edit_product_path(product), class: 'btn btn-dark' %> <!-- Enlace agregado -->
+          <%= link_to 'View', product_path(product), class: 'btn btn-dark' %>
+          <%= link_to 'Edit', edit_product_path(product), class: 'btn btn-dark' %>
           <div class='d-inline-block'>
             <%= button_to 'Delete', product_path(product), method: 'delete', class: 'btn btn-dark' %>
           </div>
@@ -39,4 +39,4 @@
   </tbody>
 </table>
 
-<%= link_to 'Create new Product', new_product_path, class: 'btn btn-dark' %> <!-- Enlace agregado -->
+<%= link_to 'Create new Product', new_product_path, class: 'btn btn-dark' %>

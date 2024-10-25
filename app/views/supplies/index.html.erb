@@ -28,10 +28,10 @@
         <td><%= supply.stock %></td>
         <td><%= supply.cost %></td>
         <td>
-          <button class="btn btn-dark">View</button>
-          <%= link_to 'Edit', edit_supply_path(supply), class: 'btn btn-dark' %> <!-- Enlace agregado -->
+          <%= link_to 'View', supply_path(supply), class: 'btn btn-dark inline-btn' %>
+          <%= link_to 'Edit', edit_supply_path(supply), class: 'btn btn-dark inline-btn' %>
           <div class='d-inline-block'>
-            <%= button_to 'Delete', supply_path(supply), method: 'delete', class: 'btn btn-dark' %>
+            <%= button_to 'Delete', supply_path(supply), method: 'delete', data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-dark' %>
           </div>
         </td>
       </tr>
@@ -39,5 +39,4 @@
   </tbody>
 </table>
 
-
-<%= link_to 'Create new Supply', new_supply_path, class: 'btn btn-dark' %> <!-- Enlace agregado -->
+<%= link_to 'Create new Supply', new_supply_path, class: 'btn btn-dark' %>

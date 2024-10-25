@@ -1,2 +1,41 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<h1 class="text-center text-dark">Detalles del Producto</h1>
+
+<div class="card bg-white text-dark">
+  <div class="card-header bg-light">
+    <h2><%= @product.name %></h2>
+  </div>
+  <div class="card-body">
+    <p><strong>Precio:</strong> $<%= number_to_currency(@product.price) %></p>
+    <p><strong>Fecha de Creación:</strong> <%= @product.created_at.strftime("%d de %B de %Y") %></p>
+    <p><strong>Última Actualización:</strong> <%= @product.updated_at.strftime("%d de %B de %Y") %></p>
+
+    <h4>Insumos relacionados:</h4>
+    <ul>
+      <% @product.supply_list.supplies.each do |supply| %>
+        <li><%= supply.name %></li>
+      <% end %>
+    </ul>
+
+    <div class="mt-4">
+      <%= link_to 'Editar Producto', edit_product_path(@product), class: 'btn btn-dark' %>
+      <%= button_to 'Eliminar Producto', product_path(@product), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este producto?' }, class: 'btn btn-dark' %>
+      <%= link_to 'Volver a Productos', products_path, class: 'btn btn-dark' %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .card-header {
+    border-radius: 5px 5px 0 0;
+  }
+  .btn-dark {
+    background-color: #000; /* Color negro para los botones */
+    color: #fff; /* Texto blanco en los botones */
+  }
+</style>

@@ -1,2 +1,37 @@
-<h1>Supplies#show</h1>
-<p>Find me in app/views/supplies/show.html.erb</p>
+<h1 class="text-center text-dark">Detalles del Suministro</h1>
+
+<div class="card bg-white text-dark">
+  <div class="card-header bg-light">
+    <h2><%= @supply.name %></h2>
+  </div>
+  <div class="card-body">
+    <p><strong>Tipo 1:</strong> <%= @supply.tipo1 || "No type declared." %></p>
+    <p><strong>Tipo 2:</strong> <%= @supply.tipo2 || "No type declared." %></p>
+    <p><strong>Tipo 3:</strong> <%= @supply.tipo3 || "No type declared." %></p>
+    <p><strong>Stock:</strong> <%= @supply.stock %></p>
+    <p><strong>Costo:</strong> $<%= number_to_currency(@supply.cost) %></p>
+    <p><strong>Requiere:</strong> <%= @supply.requires %></p>
+
+    <div class="mt-4">
+      <%= link_to 'Editar Suministro', edit_supply_path(@supply), class: 'btn btn-dark' %>
+      <%= button_to 'Eliminar Suministro', supply_path(@supply), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-dark' %>
+      <%= link_to 'Volver a Suministros', supplies_path, class: 'btn btn-dark' %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .card-header {
+    border-radius: 5px 5px 0 0;
+  }
+  .btn-dark {
+    background-color: #000; /* Color negro para los botones */
+    color: #fff; /* Texto blanco en los botones */
+  }
+</style>

@@ -1,33 +1,23 @@
 Rails.application.routes.draw do
-  get 'supplies/index'
-  get 'supplies/new'
-  get 'supplies/edit'
-  get 'supplies/show'
-  get 'products/index'
-  get 'products/new'
-  get 'products/edit'
-  get 'products/show'
-  get 'orders/index'
-  get 'orders/new'
-  get 'orders/edit'
-  get 'orders/show'
-  get 'home/index'
-  get 'fees', to: 'home#index' # not really clear about the importance of "fees"
-  resources :orders
+  resources :orders do
+    member do
+      get 'progress_state', to: 'orders#progress_state', as: 'progress_order'
+    end
+  end
+
   resources :products
   resources :supplies
-  get 'orders/:id/progress_state', to: 'orders#progress_state', as: 'progress_order'
 
-  
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'home/index'
+  get 'fees', to: 'home#index'
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health check for load balancers and uptime monitors
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
   root "home#index"
 
+  # Devise routes for user authentication
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'

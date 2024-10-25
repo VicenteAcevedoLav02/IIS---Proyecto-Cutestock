@@ -18,27 +18,26 @@
           <ul>
             <% @product_lists.each do |product_list| %>
               <% product_list.products.each do |product| %>
-               <% if product_list.order_id == order.id %>
-                <li><%= product.name %></li>
-                 <% end %>
+                <% if product_list.order_id == order.id %>
+                  <li><%= product.name %></li>
+                <% end %>
               <% end %>
             <% end %>
           </ul>
         </td>
         <td><%= order.price %></td>
-         <td><%= order.state %></td>
-      <td>
-  <button class="btn btn-dark">View</button>
-  <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %>
-  <div class='d-inline-block'>
-    <%= button_to 'Delete', order_path(order), method: 'delete', class: 'btn btn-dark' %>
-  </div>
+        <td><%= order.state %></td>
+        <td>
+          <%= link_to 'View', order_path(order), class: 'btn btn-dark' %> <!-- Enlace al show -->
+          <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %>
+          <div class='d-inline-block'>
+            <%= button_to 'Delete', order_path(order), method: 'delete', class: 'btn btn-dark' %>
+          </div>
 
-  <% if order.state == 'Pending' %>
-     <%= link_to 'Progress state', progress_order_path(order), class: 'btn btn-dark' %>
-  <% end %>
-</td>
-
+          <% if order.state == 'Pending' %>
+            <%= link_to 'Progress state', progress_order_path(order), class: 'btn btn-dark' %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -1,4 +1,7 @@
 class SuppliesController < ApplicationController
+  def show
+    @supply = Supply.find(params[:id])
+  end
   def index
     @business = current_user.business
     @supplies = Supply.where(business_id: @business.id)
@@ -33,9 +36,6 @@ class SuppliesController < ApplicationController
     else
       render :edit
     end
-  end
-
-  def show
   end
 
   def destroy

@@ -1,4 +1,10 @@
 class OrdersController < ApplicationController
+
+  def show
+    @order = Order.find(params[:id])
+  end
+
+  
   def index
     @business = current_user.business
     puts current_user.inspect

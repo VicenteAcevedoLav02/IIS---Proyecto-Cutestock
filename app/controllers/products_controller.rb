@@ -1,4 +1,7 @@
 class ProductsController < ApplicationController
+  def show
+    @product = Product.find(params[:id])
+  end
   def index
     @business = current_user.business
     @products = Product.where(business_id: @business.id)
@@ -63,8 +66,7 @@ class ProductsController < ApplicationController
   end
   
 
-  def show
-  end
+ 
 
   def destroy
     @product = Product.find(params[:id])
