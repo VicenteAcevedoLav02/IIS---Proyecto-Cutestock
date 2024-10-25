@@ -1,6 +1,6 @@
 <h1 class="text-center text-dark">Detalles del Producto</h1>
 
-<div class="card bg-white text-dark">
+<div class="card bg-white text-dark w-setted mx-auto">
   <div class="card-header bg-light">
     <h2><%= @product.name %></h2>
   </div>
@@ -16,9 +16,9 @@
       <% end %>
     </ul>
 
-    <div class="mt-4">
-      <%= link_to 'Editar Producto', edit_product_path(@product), class: 'btn btn-dark' %>
-      <%= button_to 'Eliminar Producto', product_path(@product), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este producto?' }, class: 'btn btn-dark' %>
+    <div class="mt-4 d-flex flex-column gap-3 w-setted mx-auto">
+      <%= link_to 'Editar Producto', edit_product_path(@product), class: 'btn btn-secondary' %>
+      <%= button_to 'Eliminar Producto', product_path(@product), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este producto?' }, class: 'btn btn-danger w-fully' %>
       <%= link_to 'Volver a Productos', products_path, class: 'btn btn-dark' %>
     </div>
   </div>

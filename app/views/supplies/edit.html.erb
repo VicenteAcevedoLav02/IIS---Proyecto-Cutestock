@@ -3,37 +3,37 @@
 <%= form_with model: @supply, url: supply_path(@supply), method: :patch, local: true do |form| %>
   <div class="form-group">
     <%= form.label :name, "Supply Name" %>
-    <%= form.text_field :name, class: "form-control", value: @supply.name %>
+    <%= form.text_field :name, class: "form-control mb-3", value: @supply.name %>
   </div>
 
   <div class="form-group">
     <%= form.label :tipo1, "Tipo 1" %>
-    <%= form.text_field :tipo1, class: "form-control", value: @supply.tipo1 %>
+    <%= form.text_field :tipo1, class: "form-control mb-3", value: @supply.tipo1 %>
   </div>
 
   <div class="form-group">
     <%= form.label :tipo2, "Tipo 2" %>
-    <%= form.text_field :tipo2, class: "form-control", value: @supply.tipo2 %>
+    <%= form.text_field :tipo2, class: "form-control mb-3", value: @supply.tipo2 %>
   </div>
 
   <div class="form-group">
     <%= form.label :tipo3, "Tipo 3" %>
-    <%= form.text_field :tipo3, class: "form-control", value: @supply.tipo3 %>
+    <%= form.text_field :tipo3, class: "form-control mb-3", value: @supply.tipo3 %>
   </div>
 
   <div class="form-group">
     <%= form.label :cost, "Cost" %>
-    <%= form.number_field :cost, class: "form-control", value: @supply.cost %>
+    <%= form.number_field :cost, class: "form-control mb-3", value: @supply.cost %>
   </div>
 
   <div class="form-group">
     <%= form.label :stock, "Stock" %>
-    <%= form.number_field :stock, class: "form-control", value: @supply.stock %>
+    <%= form.number_field :stock, class: "form-control mb-3", value: @supply.stock %>
   </div>
 
   <div class="form-group">
     <%= form.label :requires, "Requires" %>
-    <%= form.number_field :requires, class: "form-control", value: @supply.requires %>
+    <%= form.number_field :requires, class: "form-control mb-3", value: @supply.requires %>
   </div>
 
   <%= form.submit "Update supply", class: "btn btn-dark" %>

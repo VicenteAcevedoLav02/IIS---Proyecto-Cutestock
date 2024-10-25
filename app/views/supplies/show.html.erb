@@ -1,6 +1,6 @@
 <h1 class="text-center text-dark">Detalles del Suministro</h1>
 
-<div class="card bg-white text-dark">
+<div class="card bg-white text-dark w-setted mx-auto">
   <div class="card-header bg-light">
     <h2><%= @supply.name %></h2>
   </div>
@@ -12,9 +12,9 @@
     <p><strong>Costo:</strong> $<%= number_to_currency(@supply.cost) %></p>
     <p><strong>Requiere:</strong> <%= @supply.requires %></p>
 
-    <div class="mt-4">
-      <%= link_to 'Editar Suministro', edit_supply_path(@supply), class: 'btn btn-dark' %>
-      <%= button_to 'Eliminar Suministro', supply_path(@supply), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-dark' %>
+    <div class="mt-4 d-flex flex-column gap-3 w-setted mx-auto">
+      <%= link_to 'Editar Suministro', edit_supply_path(@supply), class: 'btn btn-secondary' %>
+      <%= button_to 'Eliminar Suministro', supply_path(@supply), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-danger w-fully' %>
       <%= link_to 'Volver a Suministros', supplies_path, class: 'btn btn-dark' %>
     </div>
   </div>

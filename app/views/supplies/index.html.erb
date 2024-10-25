@@ -6,7 +6,9 @@
 
 <h1 class="text-center">Stocks for supplies of <%= @business.name %></h1>
 
-<table class="table">
+<br />
+
+<table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr>
       <th>ID</th>
@@ -28,10 +30,12 @@
         <td><%= supply.stock %></td>
         <td><%= supply.cost %></td>
         <td>
-          <%= link_to 'View', supply_path(supply), class: 'btn btn-dark inline-btn' %>
-          <%= link_to 'Edit', edit_supply_path(supply), class: 'btn btn-dark inline-btn' %>
-          <div class='d-inline-block'>
-            <%= button_to 'Delete', supply_path(supply), method: 'delete', data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-dark' %>
+          <div class="d-flex gap-3">
+            <%= link_to 'View', supply_path(supply), class: 'btn btn-dark inline-btn' %>
+            <%= link_to 'Edit', edit_supply_path(supply), class: 'btn btn-secondary inline-btn' %>
+            <div class='d-inline-block'>
+              <%= button_to 'Delete', supply_path(supply), method: 'delete', data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-danger' %>
+            </div>
           </div>
         </td>
       </tr>
@@ -39,4 +43,6 @@
   </tbody>
 </table>
 
-<%= link_to 'Create new Supply', new_supply_path, class: 'btn btn-dark' %>
+<div class="d-flex justify-content-center">
+  <%= link_to 'Create new Supply', new_supply_path, class: 'btn btn-dark' %>
+</div>

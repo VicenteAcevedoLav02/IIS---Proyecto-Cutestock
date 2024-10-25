@@ -1,6 +1,8 @@
 <h1 class="text-center">¡Welcome, <%= @business.name %>!</h1>
 
-<table class="table">
+<br />
+
+<table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr>
       <th>ID</th>
@@ -28,19 +30,23 @@
         <td><%= order.price %></td>
         <td><%= order.state %></td>
         <td>
-          <%= link_to 'View', order_path(order), class: 'btn btn-dark' %> <!-- Enlace al show -->
-          <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-dark' %>
-          <div class='d-inline-block'>
-            <%= button_to 'Delete', order_path(order), method: 'delete', class: 'btn btn-dark' %>
-          </div>
+          <div class="d-flex gap-3">            
+            <%= link_to 'View', order_path(order), class: 'btn btn-dark' %> <!-- Enlace al show -->
+            <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-secondary' %>
 
-          <% if order.state == 'Pending' %>
-            <%= link_to 'Progress state', progress_order_path(order), class: 'btn btn-dark' %>
-          <% end %>
+            <% if order.state == 'Pending' %>
+              <%= link_to 'Progress state', progress_order_order_path(order), class: 'btn btn-success' %>
+            <% end %>
+
+            <div class='d-inline-block'>
+              <%= button_to 'Delete', order_path(order), method: 'delete', class: 'btn btn-danger' %>
+            </div>
+          </div>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to 'Create new Order', new_order_path, class: 'btn btn-dark' %> <!-- Enlace agregado -->
+<div class="d-flex justify-content-center">
+  <%= link_to 'Create new Order', new_order_path, class: 'btn btn-dark' %> <!-- Enlace agregado -->
+</div>

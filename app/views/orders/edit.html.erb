@@ -3,7 +3,7 @@
 <%= form_with model: @order, url: order_path(@order), local: true do |form| %>
   <div class="form-group">
     <%= form.label :name, "Order Name" %>
-    <%= form.text_field :name, class: "form-control", required: true, value: @order.name %>
+    <%= form.text_field :name, class: "form-control mb-3", required: true, value: @order.name %>
   </div>
 
   <div id="product-fields" class="mb-3">
@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-4">
           <label for="quantity">Quantity</label>
-          <%= text_field_tag "quantity[]", quantity, class: "form-control", size: 5 %>
+          <%= text_field_tag "quantity[]", quantity, class: "form-control mb-3", size: 5 %>
         </div>
       </div>
     <% end %>
