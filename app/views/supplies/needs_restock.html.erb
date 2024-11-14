@@ -1,0 +1,11 @@
+<h1>Suministros que requieren reabastecimiento</h1>
+
+<% if @supplies_needing_restock.any? %>
+  <ul>
+    <% @supplies_needing_restock.each do |supply| %>
+      <li><%= supply.name %> - Stock actual: <%= supply.stock %>, Necesario: <%= supply.minimum_needs %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No hay suministros que requieran reabastecimiento.</p>
+<% end %>

@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   resources :products
   resources :supplies
-
+  resources :supplies do
+    collection do
+      get :needs_restock
+    end
+  end
   get 'home/index'
   get 'fees', to: 'home#index'
 

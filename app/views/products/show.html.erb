@@ -1,25 +1,30 @@
-<h1 class="text-center text-dark">Detalles del Producto</h1>
+<h1 class="text-center text-dark">Product Detail</h1>
 
 <div class="card bg-white text-dark w-setted mx-auto">
   <div class="card-header bg-light">
     <h2><%= @product.name %></h2>
   </div>
   <div class="card-body">
-    <p><strong>Precio:</strong> $<%= number_to_currency(@product.price) %></p>
-    <p><strong>Fecha de Creación:</strong> <%= @product.created_at.strftime("%d de %B de %Y") %></p>
-    <p><strong>Última Actualización:</strong> <%= @product.updated_at.strftime("%d de %B de %Y") %></p>
+    <p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+    <p><strong>Creation Date:</strong> <%= @product.created_at.strftime("%d of %B of %Y") %></p>
+    <p><strong>Last Update:</strong> <%= @product.updated_at.strftime("%d of %B of %Y") %></p>
 
-    <h4>Insumos relacionados:</h4>
+    <h4>Related Supplies:</h4>
     <ul>
       <% @product.supply_list.supplies.each do |supply| %>
-        <li><%= supply.name %></li>
+        <li>
+          <%= supply.name %> - 
+          Stock: <%= supply.stock %> 
+          (<%= supply.needs_restock? ? "Needs Restocking" : "Sufficient" %>)
+          - Minimum Required: <%= supply.minimum_needs %>
+        </li>
       <% end %>
     </ul>
 
     <div class="mt-4 d-flex flex-column gap-3 w-setted mx-auto">
-      <%= link_to 'Editar Producto', edit_product_path(@product), class: 'btn btn-secondary' %>
-      <%= button_to 'Eliminar Producto', product_path(@product), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este producto?' }, class: 'btn btn-danger w-fully' %>
-      <%= link_to 'Volver a Productos', products_path, class: 'btn btn-dark' %>
+      <%= link_to 'Edit', edit_product_path(@product), class: 'btn btn-secondary' %>
+      <%= button_to 'Delete', product_path(@product), method: :delete, data: { confirm: 'Are you sure you want to delete this product?' }, class: 'btn btn-danger w-fully' %>
+      <%= link_to 'Back to Products', products_path, class: 'btn btn-dark' %>
     </div>
   </div>
 </div>
@@ -35,7 +40,7 @@
     border-radius: 5px 5px 0 0;
   }
   .btn-dark {
-    background-color: #000; /* Color negro para los botones */
-    color: #fff; /* Texto blanco en los botones */
+    background-color: #000; /* Black color for buttons */
+    color: #fff; /* White text in buttons */
   }
 </style>

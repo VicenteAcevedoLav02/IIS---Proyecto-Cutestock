@@ -1,21 +1,23 @@
-<h1 class="text-center text-dark">Detalles del Suministro</h1>
+<h1 class="text-center text-dark">Supply Details</h1>
 
 <div class="card bg-white text-dark w-setted mx-auto">
   <div class="card-header bg-light">
     <h2><%= @supply.name %></h2>
   </div>
   <div class="card-body">
-    <p><strong>Tipo 1:</strong> <%= @supply.tipo1 || "No type declared." %></p>
-    <p><strong>Tipo 2:</strong> <%= @supply.tipo2 || "No type declared." %></p>
-    <p><strong>Tipo 3:</strong> <%= @supply.tipo3 || "No type declared." %></p>
-    <p><strong>Stock:</strong> <%= @supply.stock %></p>
-    <p><strong>Costo:</strong> $<%= number_to_currency(@supply.cost) %></p>
-    <p><strong>Requiere:</strong> <%= @supply.requires %></p>
+    <p><strong>Type 1:</strong> <%= @supply.tipo1 || "No type declared." %></p>
+    <p><strong>Type 2:</strong> <%= @supply.tipo2 || "No type declared." %></p>
+    <p><strong>Type 3:</strong> <%= @supply.tipo3 || "No type declared." %></p>
+    <p><strong>Current Stock:</strong> <%= @supply.stock %> 
+      (<%= @supply.needs_restock? ? "Needs Restocking" : "Sufficient" %>)
+    </p>
+    <p><strong>Cost:</strong> <%= number_to_currency(@supply.cost) %></p>
+    <p><strong>Minimum Required:</strong> <%= @supply.minimum_needs %></p>
 
     <div class="mt-4 d-flex flex-column gap-3 w-setted mx-auto">
-      <%= link_to 'Editar Suministro', edit_supply_path(@supply), class: 'btn btn-secondary' %>
-      <%= button_to 'Eliminar Suministro', supply_path(@supply), method: :delete, data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-danger w-fully' %>
-      <%= link_to 'Volver a Suministros', supplies_path, class: 'btn btn-dark' %>
+      <%= link_to 'Edit Supply', edit_supply_path(@supply), class: 'btn btn-secondary' %>
+      <%= button_to 'Delete Supply', supply_path(@supply), method: :delete, data: { confirm: 'Are you sure you want to delete this supply?' }, class: 'btn btn-danger w-fully' %>
+      <%= link_to 'Back to Supplies', supplies_path, class: 'btn btn-dark' %>
     </div>
   </div>
 </div>
@@ -31,7 +33,7 @@
     border-radius: 5px 5px 0 0;
   }
   .btn-dark {
-    background-color: #000; /* Color negro para los botones */
-    color: #fff; /* Texto blanco en los botones */
+    background-color: #000; /* Black color for buttons */
+    color: #fff; /* White text in buttons */
   }
 </style>

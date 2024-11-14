@@ -110,33 +110,31 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   
     if @order.state == 'Pending'
-      # Cambiar el estado de la orden a Completed
-      @order.update(state: 'Completed')
+      # Verificar si hay stock suficiente para completar la orden
+      if can_complete_order?(@order)
+        # Proceder a descontar el stock y actualizar el estado
+        product_list = ProductList.find_by(order_id: @order.id)
+        products = product_list.products
   
-      # Acceder a la lista de productos de la orden
-      product_list = ProductList.find_by(order_id: @order.id)
-  
-      products = product_list.products
-
-      puts("Productos de la orden: ", products.inspect)
-      products.each do |product|
-
-      supply_list = SupplyList.find_by(product_id: product.id)
-      supplies = supply_list.supplies
-      # Descontar 1 al stock de cada suministro
-      supplies.each do |supply|
-        puts("SUPPLY: ", supply.inspect)
-        supply.update(stock: supply.stock - 1) if supply.stock > 0
+        products.each do |product|
+          supply_list = SupplyList.find_by(product_id: product.id)
+          supplies = supply_list.supplies
+          supplies.each do |supply|
+            supply.update(stock: supply.stock - 1) if supply.stock > 0
+          end
         end
-
-      end
   
-      redirect_to orders_path, notice: 'Order state updated to Completed and supplies updated.'
+        @order.update(state: 'Completed')
+        redirect_to orders_path, notice: 'Order state updated to Completed and supplies updated.'
+      else
+        redirect_to orders_path, alert: 'No hay suficiente stock para completar la orden.'
+      end
     else
       redirect_to orders_path, alert: 'Order state cannot be updated.'
     end
   end
 
+  
   def destroy
     @order = Order.find(params[:id])
     if @order.destroy
@@ -161,4 +159,10 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:name)
   end
+  def can_complete_order?(order)
+    order.product_list.products.all? do |product|
+      product.supply_list.supplies.all? { |supply| supply.stock > 0 }
+    end
+  end
+
 end

@@ -1,21 +1,32 @@
-<h1>Order <%= @order.id %></h1>
+<h1>Order Details <%= @order.id %></h1>
 
 <p>
-  <strong>Price:</strong>
-  <%= @order.price %>
+  <strong>Total Price:</strong>
+  $<%= number_to_currency(@order.price) %>
 </p>
 
 <p>
-  <strong>State:</strong>
+  <strong>Status:</strong>
   <%= @order.state %>
 </p>
 
 <h2>Products in this order:</h2>
 <ul>
   <% @order.product_list.products.each do |product| %>
-    <li><%= product.name %> - <%= product.price %></li>
+    <li>
+      <%= product.name %> - Price: <%= product.price %>
+      <ul>
+        <% product.supply_list.supplies.each do |supply| %>
+          <li>
+            <%= supply.name %> - Stock: <%= supply.stock %> 
+            (<%= supply.needs_restock? ? "Needs Restocking" : "Sufficient" %>)
+            - Needed: <%= supply.minimum_needs %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
   <% end %>
 </ul>
 
-<%= link_to 'Edit this Order', edit_order_path(@order), class: 'btn btn-dark' %>
+<%= link_to 'Edit Order', edit_order_path(@order), class: 'btn btn-dark' %>
 <%= link_to 'Back to Orders', orders_path, class: 'btn btn-dark' %>

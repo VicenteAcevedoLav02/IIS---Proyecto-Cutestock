@@ -48,6 +48,10 @@ class SuppliesController < ApplicationController
       redirect_to supplies_url
     end
   end
+  def needs_restock
+    @business = current_user.business
+    @supplies_needing_restock = Supply.where(business_id: @business.id).select(&:needs_restock?)
+  end
   
   private
 
