@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
-  
+
   def index
     @business = current_user.business
     puts current_user.inspect
@@ -66,6 +66,7 @@ class OrdersController < ApplicationController
       render :new
     end
   end 
+  
   def edit
     @business = current_user.business
     @order = Order.find(params[:id])
@@ -105,7 +106,10 @@ class OrdersController < ApplicationController
 
   def progress_state
     @order = Order.find(params[:id])
-  
+    
+    # Guarda el estado anterior antes de actualizar
+    previous_state = @order.state
+
     if @order.state == 'Pending'
       # Verificar si hay stock suficiente para completar la orden
       if can_complete_order?(@order)
@@ -120,14 +124,22 @@ class OrdersController < ApplicationController
             supply.update(stock: supply.stock - supply.requires) if supply.stock > 0
           end
         end
-  
+
         @order.update(state: 'Completed')
-        redirect_to orders_path, notice: 'Order state updated to Completed and supplies updated.'
+        
+        # mandar mail!!
+        OrderMailer.state_changed(
+          @order, 
+          previous_state, 
+          current_user.email
+        ).deliver_later
+        
+        redirect_to orders_path, notice: 'Estado de Orden actualizado a Completado; envio de mail hecho. Supplies actualizadas.'
       else
-        redirect_to orders_path, alert: 'No hay suficiente stock para completar la orden.'
+        redirect_to orders_path, notice: 'No hay suficiente stock para completar la orden.'
       end
     else
-      redirect_to orders_path, alert: 'Order state cannot be updated.'
+      redirect_to orders_path, notice: 'Order state no puede ser cambiada.'
     end
   end
 
@@ -153,9 +165,11 @@ class OrdersController < ApplicationController
   def set_business
     @business = current_user.business
   end
+
   def order_params
     params.require(:order).permit(:name)
   end
+
   def can_complete_order?(order)
     order.product_list.products.all? do |product|
       product.supply_list.supplies.all? { |supply| supply.stock > 0 }
@@ -164,17 +178,15 @@ class OrdersController < ApplicationController
 
   def custom_order(state)
     case state
-    when 'Pending'
-      0
-    when 'In Progress'
-      1
-    when 'Completed'
-      2
-    else
-      3
+      when 'Pending'
+        0
+      when 'In Progress'
+        1
+      when 'Completed'
+        2
+      else
+        3
     end
   end
-
-
 
 end

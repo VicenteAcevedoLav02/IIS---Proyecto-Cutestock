@@ -1,9 +1,13 @@
 <h1 class="text-center">¡Welcome, <%= @business.name %>!</h1>
 
 <br />
+
 <div class="d-flex justify-content-center">
   <%= link_to 'Create new Order', new_order_path, class: 'btn btn-dark' %> <!-- Enlace agregado -->
 </div>
+
+<br />
+
 <table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr><th>Order Name</th>

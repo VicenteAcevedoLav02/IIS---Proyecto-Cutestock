@@ -1,0 +1,13 @@
+<p> Hola, </p>
+<p> Te notificamos que el estado de tu orden "<%=@order.name%>", de precio $<%=@order.price%>, con los productos:</p>
+
+<ul>
+  <% @order.products.each do |product| %>
+      <li><%= product.name %></li>
+  <% end %>
+</ul>
+
+<p>ha cambiado su estado a <strong><%=@order.state%></strong>. Anteriormente, se encontraba en <%= @previous_state %>.</p>
+
+<p> Saludos, </p>
+<p> Equipo 5 </p>

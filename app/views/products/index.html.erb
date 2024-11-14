@@ -1,9 +1,13 @@
 <h1 class="text-center">Products created for <%= @business.name %></h1>
 
 <br />
+
 <div class="d-flex justify-content-center">
   <%= link_to 'Create new Product', new_product_path, class: 'btn btn-dark' %>
 </div>
+
+<br />
+
 <table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr>

@@ -21,6 +21,16 @@ class Order < ApplicationRecord
     end
   end
 
+  private
+
+  def state_changed?
+    saved_change_to_state?
+  end
+
+  def state_was
+    state_before_last_save
+  end
+
   def total_profit_margin
     products.sum(&:profit_margin)
   end

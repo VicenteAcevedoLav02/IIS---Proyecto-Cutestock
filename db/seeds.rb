@@ -1,3 +1,16 @@
+# Dependencias con relaciones de claves foráneas
+ProductList.delete_all
+SupplyList.delete_all
+
+# Dependientes directos
+Order.delete_all
+Product.delete_all
+Supply.delete_all
+User.delete_all
+
+# Tablas principales
+Business.delete_all
+
 # Crear negocio
 cutefits = Business.create(name: 'Cutefits')
 
@@ -42,7 +55,7 @@ created_product_names = Set.new # Usamos un conjunto para rastrear los nombres d
   product_name = "Polera #{polera.tipo2} + Impresión #{impresion.tipo1}"
 
   # Verificar si el producto ya fue creado
-  unless created_product_names.include?(product_name)
+  #unless created_product_names.include?(product_name)
     product = Product.create(
       business: cutefits,
       price: (polera.cost + impresion.cost) * 2, # Precio basado en los costos
@@ -58,9 +71,9 @@ created_product_names = Set.new # Usamos un conjunto para rastrear los nombres d
     created_product_names.add(product_name) # Añadir el nombre del producto al conjunto
     puts("LISTA DE PRODUCTOS CREADOS POR LA SEED")
     puts(products.inspect)
-  else
-    puts("El producto '#{product_name}' ya existe, no se creará nuevamente.")
-  end
+  #else
+  #  puts("El producto '#{product_name}' ya existe, no se creará nuevamente.")
+  #end
 end
 
 
