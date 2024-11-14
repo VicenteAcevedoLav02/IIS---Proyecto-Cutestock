@@ -3,8 +3,6 @@ class Order < ApplicationRecord
   has_one :product_list, dependent: :destroy
   has_many :products, through: :product_list
 
-  #after_update :send_order_state_changed_email, if: :state_changed?
-
   def total_supplies_needed
     total_needed = Hash.new(0)
 
@@ -33,11 +31,4 @@ class Order < ApplicationRecord
     state_before_last_save
   end
 
-  #def send_order_state_changed_email
-  #  OrderMailer.state_changed(
-  #    self, 
-  #    state_was, 
-  #    current_user.email
-  #  ).deliver_later
-  #end
 end

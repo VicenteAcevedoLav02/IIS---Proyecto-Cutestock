@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
+
   def index
     @business = current_user.business
     puts current_user.inspect
@@ -12,6 +13,7 @@ class OrdersController < ApplicationController
     @product_lists = ProductList.joins(:order).where(orders: { business_id: @business.id })
   end
   
+
   def new
     @business = current_user.business
     @order = Order.new
@@ -57,6 +59,10 @@ class OrdersController < ApplicationController
         end
       end
 
+
+
+
+      
       puts("PRODUCT LIST OFFICIALLY:")
       puts(product_list.products.inspect)
       redirect_to orders_path, notice: "Order created successfully."
