@@ -12,7 +12,8 @@
   <thead>
     <tr><th>Order Name</th>
       <th>Products</th>
-      <th>Price</th>
+      <th>Sale Price</th>
+      <th>Total Profit Margin</th>
       <th>State</th>
       <th>Actions</th>
      </tr>
@@ -33,6 +34,7 @@
           </ul>
         </td>
         <td><%= order.price %></td>
+        <td><%= order.total_profit_margin %></td>
         <td><%= order.state %></td>
         <td>
           <div class="d-flex gap-3">            
@@ -40,7 +42,7 @@
             <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-secondary' %>
 
             <% if order.state == 'Pending' %>
-              <%= link_to 'Progress state', progress_order_order_path(order), class: 'btn btn-success' %>
+              <%= link_to 'Complete Order!', progress_order_order_path(order), class: 'btn btn-success' %>
             <% end %>
 
             <div class='d-inline-block'>

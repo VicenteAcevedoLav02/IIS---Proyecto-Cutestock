@@ -6,6 +6,7 @@
   </div>
   <div class="card-body">
     <p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+    <p><strong>Profit Margin:</strong> <%= number_to_currency(@product.profit_margin) %></p>
     <p><strong>Creation Date:</strong> <%= @product.created_at.strftime("%d of %B of %Y") %></p>
     <p><strong>Last Update:</strong> <%= @product.updated_at.strftime("%d of %B of %Y") %></p>
 
