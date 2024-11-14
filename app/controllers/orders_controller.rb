@@ -9,9 +9,10 @@ class OrdersController < ApplicationController
     @business = current_user.business
     puts current_user.inspect
     @orders = Order.where(business_id: @business.id)
-    @product_lists = ProductList.joins(:order)
-    .where(orders: { business_id: @business.id })
+                   .sort_by { |order| custom_order(order.state) }
+    @product_lists = ProductList.joins(:order).where(orders: { business_id: @business.id })
   end
+  
 
   def new
     @business = current_user.business
@@ -120,7 +121,7 @@ class OrdersController < ApplicationController
           supply_list = SupplyList.find_by(product_id: product.id)
           supplies = supply_list.supplies
           supplies.each do |supply|
-            supply.update(stock: supply.stock - 1) if supply.stock > 0
+            supply.update(stock: supply.stock - supply.requires) if supply.stock > 0
           end
         end
   
@@ -164,5 +165,20 @@ class OrdersController < ApplicationController
       product.supply_list.supplies.all? { |supply| supply.stock > 0 }
     end
   end
+
+  def custom_order(state)
+    case state
+    when 'Pending'
+      0
+    when 'In Progress'
+      1
+    when 'Completed'
+      2
+    else
+      3
+    end
+  end
+
+
 
 end

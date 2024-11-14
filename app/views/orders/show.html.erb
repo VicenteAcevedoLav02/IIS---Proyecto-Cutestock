@@ -1,8 +1,13 @@
 <h1>Order Details <%= @order.id %></h1>
 
 <p>
-  <strong>Total Price:</strong>
-  $<%= number_to_currency(@order.price) %>
+  <strong>Total Order Price:</strong>
+  <%= number_to_currency(@order.price) %>
+</p>
+
+<p>
+  <strong>Total Supply Cost:</strong>
+  <%= number_to_currency(@order.total_supply_cost) %>
 </p>
 
 <p>
@@ -12,18 +17,30 @@
 
 <h2>Products in this order:</h2>
 <ul>
-  <% @order.product_list.products.each do |product| %>
+  <% @order.products.each do |product| %>
     <li>
-      <%= product.name %> - Price: <%= product.price %>
+      <%= product.name %> - Price: <%= number_to_currency(product.price) %>
       <ul>
         <% product.supply_list.supplies.each do |supply| %>
           <li>
             <%= supply.name %> - Stock: <%= supply.stock %> 
             (<%= supply.needs_restock? ? "Needs Restocking" : "Sufficient" %>)
             - Needed: <%= supply.minimum_needs %>
+            - Cost per Unit: <%= number_to_currency(supply.cost) %>
           </li>
         <% end %>
       </ul>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Total Supplies Needed for the Order:</h2>
+<ul>
+  <% @order.total_supplies_needed.each do |supply, total_needed| %>
+    <li>
+      <%= supply.name %> - Total Needed: <%= total_needed %>, Stock: <%= supply.stock %>
+      (<%= total_needed > supply.stock ? "Needs Restocking" : "Sufficient" %>)
+      - Total Cost: <%= number_to_currency(supply.cost * total_needed) %>
     </li>
   <% end %>
 </ul>

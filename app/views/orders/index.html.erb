@@ -4,8 +4,7 @@
 
 <table class="table table-bordered w-75 mx-auto">
   <thead>
-    <tr>
-      <th>ID</th>
+    <tr><th>Order Name</th>
       <th>Products</th>
       <th>Price</th>
       <th>State</th>
@@ -15,7 +14,7 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= order.id %></td>
+        <td><%= order.name %></td>
         <td>
           <ul>
             <% @product_lists.each do |product_list| %>

@@ -12,6 +12,7 @@
   <thead>
     <tr>
       <th>ID</th>
+      <th>Name</th>
       <th>Type1</th>
       <th>Type2</th>
       <th>Type3</th>
@@ -24,6 +25,7 @@
     <% @supplies.each do |supply| %>
       <tr>
         <td><%= supply.id %></td>
+        <td><%= supply.name %></td>
         <td><%= supply.tipo1 || "No type declared." %></td>
         <td><%= supply.tipo2 || "No type declared." %></td>
         <td><%= supply.tipo3 || "No type declared." %></td>
@@ -34,7 +36,7 @@
             <%= link_to 'View', supply_path(supply), class: 'btn btn-dark inline-btn' %>
             <%= link_to 'Edit', edit_supply_path(supply), class: 'btn btn-secondary inline-btn' %>
             <div class='d-inline-block'>
-              <%= button_to 'Delete', supply_path(supply), method: 'delete', data: { confirm: '¿Estás seguro de que deseas eliminar este suministro?' }, class: 'btn btn-danger' %>
+              <%= button_to 'Delete', supply_path(supply), method: 'delete', data: { confirm: '¿Are you sure you want to delete this supply?' }, class: 'btn btn-danger' %>
             </div>
           </div>
         </td>
