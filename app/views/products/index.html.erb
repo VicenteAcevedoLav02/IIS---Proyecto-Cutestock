@@ -1,7 +1,9 @@
 <h1 class="text-center">Products created for <%= @business.name %></h1>
 
 <br />
-
+<div class="d-flex justify-content-center">
+  <%= link_to 'Create new Product', new_product_path, class: 'btn btn-dark' %>
+</div>
 <table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr>
@@ -9,6 +11,7 @@
       <th>Name</th>
       <th>Supplies</th>
       <th>Price</th>
+      <th>Profit Margin</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -29,6 +32,7 @@
           </ul>
         </td>
         <td><%= product.price %></td>
+        <td><%= product.profit_margin %></td>
         <td>
           <div class="d-flex gap-3">
             <%= link_to 'View', product_path(product), class: 'btn btn-dark' %>
@@ -42,6 +46,3 @@
     <% end %>
   </tbody>
 </table>
-<div class="d-flex justify-content-center">
-  <%= link_to 'Create new Product', new_product_path, class: 'btn btn-dark' %>
-</div>

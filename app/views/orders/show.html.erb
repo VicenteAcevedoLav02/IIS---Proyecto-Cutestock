@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <strong>Total Supply Cost:</strong>
-  <%= number_to_currency(@order.total_supply_cost) %>
+  <strong>Total Profit Margin:</strong>
+  <%= number_to_currency(@order.total_profit_margin) %>
 </p>
 
 <p>
@@ -20,16 +20,6 @@
   <% @order.products.each do |product| %>
     <li>
       <%= product.name %> - Price: <%= number_to_currency(product.price) %>
-      <ul>
-        <% product.supply_list.supplies.each do |supply| %>
-          <li>
-            <%= supply.name %> - Stock: <%= supply.stock %> 
-            (<%= supply.needs_restock? ? "Needs Restocking" : "Sufficient" %>)
-            - Needed: <%= supply.minimum_needs %>
-            - Cost per Unit: <%= number_to_currency(supply.cost) %>
-          </li>
-        <% end %>
-      </ul>
     </li>
   <% end %>
 </ul>
@@ -40,7 +30,7 @@
     <li>
       <%= supply.name %> - Total Needed: <%= total_needed %>, Stock: <%= supply.stock %>
       (<%= total_needed > supply.stock ? "Needs Restocking" : "Sufficient" %>)
-      - Total Cost: <%= number_to_currency(supply.cost * total_needed) %>
+      - Total Cost: <%= number_to_currency(supply.cost * total_needed/supply.requires) %>
     </li>
   <% end %>
 </ul>

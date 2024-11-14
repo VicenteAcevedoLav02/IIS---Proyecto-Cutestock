@@ -17,8 +17,12 @@ class Order < ApplicationRecord
 
   def total_supply_cost
     total_supplies_needed.sum do |supply, total_needed|
-      supply.cost * total_needed
+      supply.cost * total_needed /supply.minimum_needs
     end
+  end
+
+  def total_profit_margin
+    products.sum(&:profit_margin)
   end
   
 end

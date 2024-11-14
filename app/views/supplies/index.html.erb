@@ -8,14 +8,17 @@
 
 <br />
 
+<div class="d-flex justify-content-center">
+  <%= link_to 'Create new Supply', new_supply_path, class: 'btn btn-dark' %>
+</div>
 <table class="table table-bordered w-75 mx-auto">
   <thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Type1</th>
-      <th>Type2</th>
-      <th>Type3</th>
+      <th>Type</th>
+      <th>Color</th>
+      <th>Size</th>
       <th>Stock</th>
       <th>Cost</th>
       <th>Actions</th>
@@ -44,7 +47,3 @@
     <% end %>
   </tbody>
 </table>
-
-<div class="d-flex justify-content-center">
-  <%= link_to 'Create new Supply', new_supply_path, class: 'btn btn-dark' %>
-</div>

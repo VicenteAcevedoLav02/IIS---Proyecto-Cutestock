@@ -59,10 +59,6 @@ class OrdersController < ApplicationController
         end
       end
 
-
-  
-      
-
       puts("PRODUCT LIST OFFICIALLY:")
       puts(product_list.products.inspect)
       redirect_to orders_path, notice: "Order created successfully."
