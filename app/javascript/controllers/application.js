@@ -1,4 +1,6 @@
 import { Application } from "@hotwired/stimulus"
+import { Turbo } from "@hotwired/turbo-rails"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
 
 const application = Application.start()
 

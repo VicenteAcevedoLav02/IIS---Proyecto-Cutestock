@@ -1,0 +1,5 @@
+<%= turbo_stream_from "search_results_#{params[:query]}" %>
+
+<div id="search-results">
+  <%= render partial: "search_results", locals: { orders: @orders, products: @products, supplies: @supplies } %>
+</div>
