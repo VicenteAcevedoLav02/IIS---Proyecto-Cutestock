@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
     @business = current_user.business
     @next_order_id = Order.last&.id.to_i + 1 # O un método alternativo para obtener el próximo ID
     @product = Product.new
-    @supplies = Supply.all # Obtén todos los supplies disponibles
+    @supplies = current_user.business.supplies # Obtén todos los supplies disponibles
   end
 
   def create
@@ -34,10 +34,10 @@ class ProductsController < ApplicationController
         supply = Supply.find_by(name: name)
         supply_list.supplies << supply if supply
       end
-      flash[:success] = 'El producto fue creado exitosamente'
+      flash[:success] = 'The product was created succesfuly.'
       redirect_to products_path#, notice: 'Product was successfully created.'
     else
-      flash[:error] = 'El producto no pudo ser creado correctamente'
+      flash[:error] = 'The product could not be updated.'
       @supplies = Supply.all
       render :new
     end
@@ -58,10 +58,10 @@ class ProductsController < ApplicationController
         supply = Supply.find_by(name: name)
         @product.supply_list.supplies << supply if supply
       end
-      flash[:success] = 'El producto fue actualizado exitosamente'
+      flash[:success] = 'The product was updated succesfuly.'
       redirect_to products_path#, notice: 'Product was successfully updated.'
     else
-      flash[:error] = 'El producto no pudo ser actualizado correctamente'
+      flash[:error] = 'The product could not be updated.'
       @supplies = Supply.all
       render :edit
     end
@@ -73,10 +73,10 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     if @product.destroy
-      flash[:success] = 'El producto fue eliminado exitosamente'
+      flash[:success] = 'The product was removed succesfuly.'
       redirect_to products_url
     else
-      flash[:error] = 'El producto no pudo ser eliminado correctamente'
+      flash[:error] = 'The product could not be removed.'
       redirect_to products_url
     end
   end
