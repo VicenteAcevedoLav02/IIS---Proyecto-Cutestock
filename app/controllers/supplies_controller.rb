@@ -18,8 +18,10 @@ class SuppliesController < ApplicationController
     @supply.business = current_user.business
 
     if @supply.save
-      redirect_to supplies_path, notice: 'Supply was successfully created.'
+      flash[:success] = 'Supply was successfully created.'
+      redirect_to supplies_path#, notice: 'Supply was successfully created.'
     else
+      flash[:error] = 'Supply could not be created.'
       render :new
     end
   end
@@ -32,8 +34,10 @@ class SuppliesController < ApplicationController
     @business = current_user.business
     @supply = Supply.find(params[:id])
     if @supply.update(supply_params)
-      redirect_to supplies_path, notice: 'Supply was successfully updated.'
+      flash[:success] = 'Supply was successfully updated.'
+      redirect_to supplies_path#, notice: 'Supply was successfully updated.'
     else
+      flash[:error] = 'Supply could not be updated.'
       render :edit
     end
   end
@@ -41,10 +45,10 @@ class SuppliesController < ApplicationController
   def destroy
     @supply = Supply.find(params[:id])
     if @supply.destroy
-      flash[:success] = 'Object was successfully deleted.'
+      flash[:success] = 'Supply was successfully deleted.'
       redirect_to supplies_url
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = 'Something went wrong deleting supply'
       redirect_to supplies_url
     end
   end

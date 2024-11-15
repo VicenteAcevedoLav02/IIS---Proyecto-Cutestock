@@ -34,9 +34,10 @@ class ProductsController < ApplicationController
         supply = Supply.find_by(name: name)
         supply_list.supplies << supply if supply
       end
-
-      redirect_to products_path, notice: 'Product was successfully created.'
+      flash[:success] = 'El producto fue creado exitosamente'
+      redirect_to products_path#, notice: 'Product was successfully created.'
     else
+      flash[:error] = 'El producto no pudo ser creado correctamente'
       @supplies = Supply.all
       render :new
     end
@@ -57,9 +58,10 @@ class ProductsController < ApplicationController
         supply = Supply.find_by(name: name)
         @product.supply_list.supplies << supply if supply
       end
-  
-      redirect_to products_path, notice: 'Product was successfully updated.'
+      flash[:success] = 'El producto fue actualizado exitosamente'
+      redirect_to products_path#, notice: 'Product was successfully updated.'
     else
+      flash[:error] = 'El producto no pudo ser actualizado correctamente'
       @supplies = Supply.all
       render :edit
     end
@@ -71,10 +73,10 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     if @product.destroy
-      flash[:success] = 'Object was successfully deleted.'
+      flash[:success] = 'El producto fue eliminado exitosamente'
       redirect_to products_url
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = 'El producto no pudo ser eliminado correctamente'
       redirect_to products_url
     end
   end

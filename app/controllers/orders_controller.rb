@@ -61,8 +61,10 @@ class OrdersController < ApplicationController
 
       puts("PRODUCT LIST OFFICIALLY:")
       puts(product_list.products.inspect)
-      redirect_to orders_path, notice: "Order created successfully."
+      flash[:success] = 'La orden ha sido creada exitosamente'
+      redirect_to orders_path
     else
+      flash[:error] = 'Hubo un problema al intentar crear la orden'
       render :new
     end
   end 
@@ -98,8 +100,10 @@ class OrdersController < ApplicationController
     end
   
     if @order.save
-      redirect_to orders_path, notice: 'Order was successfully updated.'
+      flash[:success] = 'La orden ha sido actualizada exitosamente'
+      redirect_to orders_path
     else
+      flash[:error] = 'Hubo un problema al intentar actualizar la orden'
       render :edit
     end
   end
@@ -133,13 +137,15 @@ class OrdersController < ApplicationController
           previous_state, 
           current_user.email
         ).deliver_later
-        
-        redirect_to orders_path, notice: 'Estado de Orden actualizado a Completado; envio de mail hecho. Supplies actualizadas.'
+        flash[:info] = 'Estado de Orden actualizado a Completado; envio de mail hecho. Supplies actualizadas.'
+        redirect_to orders_path#, notice: 'Estado de Orden actualizado a Completado; envio de mail hecho. Supplies actualizadas.'
       else
-        redirect_to orders_path, notice: 'No hay suficiente stock para completar la orden.'
+        flash[:info] = 'No hay suficiente stock para completar la orden.'
+        redirect_to orders_path#, notice: 'No hay suficiente stock para completar la orden.'
       end
     else
-      redirect_to orders_path, notice: 'Order state no puede ser cambiada.'
+      flash[:info] = 'Order state no puede ser cambiada.'
+      redirect_to orders_path#, notice: 'Order state no puede ser cambiada.'
     end
   end
 
@@ -147,10 +153,10 @@ class OrdersController < ApplicationController
   def destroy
     @order = Order.find(params[:id])
     if @order.destroy
-      flash[:success] = 'Object was successfully deleted.'
+      flash[:success] = 'La orden fue eliminada exitosamente'
       redirect_to orders_url
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = 'La orden no pudo ser eliminada correctamente'
       redirect_to orders_url
     end
   end
