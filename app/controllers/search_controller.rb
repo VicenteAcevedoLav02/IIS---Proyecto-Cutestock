@@ -1,9 +1,10 @@
 class SearchController < ApplicationController
     def index
       query = params[:query].downcase
-      @orders = Order.where("LOWER(name) LIKE ?", "%#{query}%")
-      @products = Product.where("LOWER(name) LIKE ?", "%#{query}%")
-      @supplies = Supply.where("LOWER(name) LIKE ?", "%#{query}%")
+      business = current_user.business
+      @orders = business.orders.where("LOWER(name) LIKE ?", "%#{query}%")
+      @products = business.products.where("LOWER(name) LIKE ?", "%#{query}%")
+      @supplies = business.supplies.where("LOWER(name) LIKE ?", "%#{query}%")
   
       respond_to do |format|
         format.html
