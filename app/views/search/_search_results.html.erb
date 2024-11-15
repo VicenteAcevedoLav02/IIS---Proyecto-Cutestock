@@ -1,0 +1,49 @@
+<div class="container my-4">
+  <% if orders.any? %>
+    <div class="card mb-3">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Orders</h3>
+        <%= link_to "Add Order", new_order_path, class: "btn btn-outline-light btn-sm" %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% orders.each do |order| %>
+          <li class="list-group-item">
+            <%= link_to order.name, order_path(order), class: "text-decoration-none text-dark" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if products.any? %>
+    <div class="card mb-3">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Products</h3>
+        <%= link_to "Add Product", new_product_path, class: "btn btn-outline-light btn-sm" %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% products.each do |product| %>
+          <li class="list-group-item">
+            <%= link_to product.name, product_path(product), class: "text-decoration-none text-dark" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if supplies.any? %>
+    <div class="card mb-3">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Supplies</h3>
+        <%= link_to "Add Supply", new_supply_path, class: "btn btn-outline-light btn-sm" %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% supplies.each do |supply| %>
+          <li class="list-group-item">
+            <%= link_to supply.name, supply_path(supply), class: "text-decoration-none text-dark" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

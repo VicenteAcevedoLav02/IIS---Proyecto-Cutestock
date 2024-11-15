@@ -1,40 +1,3 @@
-<head>
-  <%= stylesheet_link_tag 'application', media: 'all', rel: 'stylesheet' %>
-  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    .dropdown-toggle {
-      font-size: 50px; /* or desired size */
-    }
-
-    .container-fluid {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-link {
-      margin-left: 50px;
-      margin-right: 50px;
-    }
-    
-    .nav-link-large {
-      font-size: 2rem; /* Adjust font-size as desired */
-    }
-
-    .dropdown-menu-arial-black {
-      font-family: 'Arial', sans-serif; /* Specify the font family */
-    }
-
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    }
-
-  </style>
-</head>
-
-
 <nav class="navbar navbar-expand-lg" style="background-color: #000; padding: 10px;">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
@@ -48,71 +11,56 @@
     <div class="collapse navbar-collapse" id="navbarNav" >
       <div class="navbar-nav">
         <% if user_signed_in? %>
-          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/orders#index">
-            Orders
-          </a>
-          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/products#index">
-            Products
-          </a>
-          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/supplies#index">
-            Stocks
-          </a>
-          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/fees#index">
-            Fees
-          </a>
+          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/orders#index">Orders</a>
+          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/products#index">Products</a>
+          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/supplies#index">Stocks</a>
+          <a class="nav-link text-white nav-bar-link px-4 py-3" href="/fees#index">Fees</a>
         <% else %>
-          <a class="nav-link text-white" href="#">
-            No Logeado In!
-          </a>
+          <a class="nav-link text-white" href="#">No Logeado In!</a>
         <% end %>
       </div>
-
- <div class="dropdown ms-auto">
-  <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    <i class="bi bi-person-circle"></i>
-  </a>
-
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-    <% if user_signed_in?%>
-        
-        
-          <li>
-            <div class='d-inline-block'>
-              <%= button_to 'Log Out', destroy_user_session_path(), method: 'delete', class: 'dropdown-item bi bi-box-arrow-right' %>
-            </div>
-          </li>
-            
-
-        <% else %>
-
-          <li>
-            <a class="dropdown-item" href="/users/sign_in">
-              <i class="bi bi-box-arrow-right"></i>
-              Log In
-            </a>
-          </li>
-          
-          <li>
-            <a class="dropdown-item" href="/users/sign_up">
-              <i class="bi bi-box-arrow-right"></i>
-              Sign Up
-            </a>
-          </li>
-
+      
+      <div class="ms-auto d-flex align-items-center">
+        <% if user_signed_in? %>
+          <!-- Search Form with Dropdown Results -->
+          <div class="dropdown">
+            <%= form_with url: search_path, method: :get, local: false, class: "d-inline" do |form| %>
+              <%= form.text_field :query, placeholder: "Search Orders, Products, Supplies...", class: "form-control dropdown-toggle", id: "searchInput", data: { bs_toggle: "dropdown" } %>
+            <% end %>
+            <ul class="dropdown-menu w-100" id="searchResults"></ul>
+          </div>
         <% end %>
-      </ul>
 
+        <!-- User Dropdown -->
+        <div class="dropdown ms-3">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <% if user_signed_in? %>
+              <li>
+                <div class='d-inline-block'>
+                  <%= button_to 'Log Out', destroy_user_session_path(), method: 'delete', class: 'dropdown-item bi bi-box-arrow-right' %>
+                </div>
+              </li>
+            <% else %>
+              <li>
+                <a class="dropdown-item" href="/users/sign_in">
+                  <i class="bi bi-box-arrow-right"></i> Log In
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/users/sign_up">
+                  <i class="bi bi-box-arrow-right"></i> Sign Up
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- Bootstrap Bundle with Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-  .nav-bar-link:hover {
-    background-color: #333;
-  }
-  .nav-bar-link {
-    border-radius: 7%;
-  }
-</style>
