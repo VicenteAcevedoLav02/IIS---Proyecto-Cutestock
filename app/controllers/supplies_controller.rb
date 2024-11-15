@@ -30,6 +30,18 @@ class SuppliesController < ApplicationController
     @supply = Supply.find(params[:id])
   end
 
+   def restock
+    @supply = Supply.find(params[:id])
+    restock_amount = params[:restock_amount].to_i
+    if restock_amount.positive?
+      @supply.update(stock: @supply.stock + restock_amount)
+      flash[:notice] = "Stock of #{@supply.name} increased by #{restock_amount}."
+    else
+      flash[:alert] = "Invalid restock amount."
+    end
+    redirect_to request.referer || stock_alerts_path # Ajusta la ruta según tu configuración
+  end
+
   def update
     @business = current_user.business
     @supply = Supply.find(params[:id])

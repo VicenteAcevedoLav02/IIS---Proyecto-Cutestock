@@ -6,6 +6,7 @@
       <th>Supply Name</th>
       <th>Stock</th>
       <th>Minimum Required</th>
+      <th class="text-center" style="width: 1%;">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,14 @@
         <td><%= supply.name %></td>
         <td><%= supply.stock %></td>
         <td><%= supply.requires %></td>
+        <td class="text-center">
+          <%= form_with url: restock_supply_path(supply), method: :post, local: true do |form| %>
+            <div class="d-flex align-items-center justify-content-center">
+              <%= form.number_field :restock_amount, min: 1, class: "form-control form-control-sm", placeholder: "Amount", style: "width: 70px; margin-right: 5px;" %>
+              <%= form.submit "Restock", class: "btn btn-dark btn-sm" %>
+            </div>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

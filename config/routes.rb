@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'fees', to: 'home#index'
   get 'search', to: 'search#index'
-
+  resources :supplies do
+    member do
+      post :restock
+    end
+  end
   # Health check for load balancers and uptime monitors
   get "up" => "rails/health#show", as: :rails_health_check
 
