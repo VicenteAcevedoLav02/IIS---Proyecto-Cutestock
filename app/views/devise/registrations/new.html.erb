@@ -21,8 +21,6 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your password" %>
   </div>
 
-  <%= f.hidden_field :business_id, value: Business.last.id %>
-
   <div class="d-grid mb-4">
     <%= f.submit "Sign up", class: "btn btn-dark btn-block" %>
   </div>
