@@ -8,7 +8,7 @@
 
   <div class="form-group">
     <%= form.label :price, "Price" %>
-    <%= form.number_field :price, class: "form-control", step: "0.01", required: true %>
+    <%= form.number_field :price, class: "form-control", step: "0.01", required: true, min: 0 %>
   </div>
 
   <div id="supply-fields" class="mb-3">
@@ -17,15 +17,44 @@
         <label for="supply_name">Supply Name</label>
         <%= select_tag "supply_name[]", options_from_collection_for_select(@supplies, :name, :name), class: "form-control", prompt: "Select a supply" %>
       </div>
+      <div class="col-md-4 text-center">
+        <button type="button" class="btn btn-danger remove-supply" disabled>&#10006;</button>
+      </div>
     </div>
   </div>
 
   <button type="button" class="btn btn-dark" id="add-supply">Add Supply</button>
   <br><br>
-  <%= form.submit "Create Product", class: "btn btn-dark" %>
+  <%= form.submit "Create Product", class: "btn btn-dark", id: "submit-button", disabled: true %>
 <% end %>
 
 <script>
+  function checkIfAllSuppliesSelected() {
+    const supplySelectors = document.querySelectorAll('select[name="supply_name[]"]');
+    let allSelected = true;
+    
+    supplySelectors.forEach(selector => {
+      if (!selector.value) {
+        allSelected = false;
+      }
+    });
+
+    const submitButton = document.getElementById("submit-button");
+    submitButton.disabled = !allSelected;
+  }
+
+  function updateRemoveButtonState() {
+    const removeButtons = document.querySelectorAll(".remove-supply");
+    const supplyFields = document.querySelectorAll(".supply-field");
+
+    // Enable/disable remove buttons based on the number of supply fields
+    removeButtons.forEach(button => {
+      const supplyFieldCount = supplyFields.length;
+      button.disabled = supplyFieldCount <= 1;  // Disable remove button if only one field is left
+    });
+  }
+
+  // Event listener for the 'Add Supply' button
   document.getElementById("add-supply").addEventListener("click", function() {
     const supplyFields = document.getElementById("supply-fields");
     const newSupplyField = document.createElement("div");
@@ -38,7 +67,30 @@
           <%= options_for_select(@supplies.map { |s| [s.name, s.name] }) %>
         </select>
       </div>
+      <div class="col-md-4 text-center">
+        <button type="button" class="btn btn-danger remove-supply">&#10006;</button>
+      </div>
     `;
     supplyFields.appendChild(newSupplyField);
+    checkIfAllSuppliesSelected(); // Re-check supplies selection after adding a new one
+    updateRemoveButtonState();    // Update the state of remove buttons
   });
+
+  // Event listener for removing a supply field
+  document.getElementById("supply-fields").addEventListener("click", function(event) {
+    if (event.target.classList.contains("remove-supply")) {
+      event.target.closest(".supply-field").remove();
+      checkIfAllSuppliesSelected(); // Re-check supplies selection after removing a field
+      updateRemoveButtonState();    // Update the state of remove buttons
+    }
+  });
+
+  // Check if all supplies are selected initially
+  document.addEventListener("DOMContentLoaded", function() {
+    checkIfAllSuppliesSelected();
+    updateRemoveButtonState();  // Update remove button states on page load
+  });
+
+  // Listen for changes in the select fields
+  document.getElementById("supply-fields").addEventListener("change", checkIfAllSuppliesSelected);
 </script>

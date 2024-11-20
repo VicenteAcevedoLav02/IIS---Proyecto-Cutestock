@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :business, optional: true
-
+  attr_accessor :business_name
 end

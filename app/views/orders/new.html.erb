@@ -12,19 +12,49 @@
         <label for="product_name">Product Name</label>
         <%= select_tag "product_name[]", options_from_collection_for_select(@products, :name, :name), class: "form-control", prompt: "Select a product" %>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <label for="quantity">Quantity</label>
-        <%= text_field_tag "quantity[]", nil, class: "form-control", size: 5 %>
+        <%= text_field_tag "quantity[]", nil, class: "form-control", size: 5, required: true, min: 1 %>
+      </div>
+      <div class="col-md-1 text-center">
+        <button type="button" class="btn btn-danger remove-product">&#10006;</button>
       </div>
     </div>
   </div>
 
   <button type="button" class="btn btn-dark" id="add-product">Add Product</button>
   <br><br>
-  <%= form.submit "Create Order", class: "btn btn-dark" %>
+  <%= form.submit "Create Order", class: "btn btn-dark", id: "create-order-button" %>
 <% end %>
 
 <script>
+  function updateRemoveButtonState() {
+    const removeButtons = document.querySelectorAll(".remove-product");
+    const productFields = document.querySelectorAll(".product-field");
+
+    // Enable/disable remove buttons based on the number of product fields
+    removeButtons.forEach(button => {
+      const productFieldCount = productFields.length;
+      button.disabled = productFieldCount <= 1;  // Disable remove button if only one field is left
+    });
+  }
+
+  function checkIfAllProductsValid() {
+    const productSelectors = document.querySelectorAll('select[name="product_name[]"]');
+    const quantityInputs = document.querySelectorAll('input[name="quantity[]"]');
+    let allValid = true;
+
+    productSelectors.forEach((selector, index) => {
+      if (!selector.value || quantityInputs[index].value <= 0) {
+        allValid = false;
+      }
+    });
+
+    const submitButton = document.getElementById('create-order-button');
+    submitButton.disabled = !allValid;  // Disable submit button if any product is invalid
+  }
+
+  // Event listener for the 'Add Product' button
   document.getElementById("add-product").addEventListener("click", function() {
     const productFields = document.getElementById("product-fields");
     const newProductField = document.createElement("div");
@@ -32,16 +62,39 @@
     newProductField.innerHTML = `
       <div class="col-md-8">
         <label for="product_name">Product Name</label>
-        <select name="product_name[]" class="form-control">
+        <select name="product_name[]" class="form-control" required>
           <option value="">Select a product</option>
           <%= options_for_select(@products.map { |p| [p.name, p.name] }) %>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <label for="quantity">Quantity</label>
-        <input type="text" name="quantity[]" class="form-control" size="5">
+        <input type="number" name="quantity[]" class="form-control" size="5" min="1" required>
+      </div>
+      <div class="col-md-1 text-center">
+        <button type="button" class="btn btn-danger remove-product">&#10006;</button>
       </div>
     `;
     productFields.appendChild(newProductField);
+    updateRemoveButtonState(); // Update the state of remove buttons
+  });
+
+  // Event listener for removing a product field
+  document.getElementById("product-fields").addEventListener("click", function(event) {
+    if (event.target.classList.contains("remove-product")) {
+      event.target.closest(".product-field").remove();
+      updateRemoveButtonState(); // Update the state of remove buttons after removing a product
+      checkIfAllProductsValid(); // Re-check validation after removing a product
+    }
+  });
+
+  // Listen for changes in the select fields and quantity inputs
+  document.getElementById("product-fields").addEventListener("change", function() {
+    checkIfAllProductsValid(); // Re-check validation whenever any field is changed
+  });
+
+  // Check initial validation on page load
+  document.addEventListener("DOMContentLoaded", function() {
+    checkIfAllProductsValid();
   });
 </script>

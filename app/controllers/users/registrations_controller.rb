@@ -12,10 +12,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
 
-    # Create a new Business and assign it to the user
-    resource.business = Business.create(name: "Business for #{resource.email}")
+    # Crear un nuevo negocio con el nombre proporcionado por el usuario
+    resource.business = Business.create(name: resource.business_name)
 
-    # Save user and handle Devise response
+    # Guardar el usuario y manejar la respuesta de Devise
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -63,7 +63,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:business_name])
   end
 
   # If you have extra params to permit, append them to the sanitizer.

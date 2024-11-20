@@ -9,6 +9,11 @@
   </div>
 
   <div class="form-group mb-3">
+    <%= f.label :business_name, class: "form-label" %>
+    <%= f.text_field :business_name, class: "form-control", placeholder: "Enter your business name" %>
+  </div>
+
+  <div class="form-group mb-3">
     <%= f.label :password, class: "form-label" %>
     <% if @minimum_password_length %>
       <small class="form-text text-muted">(<%= @minimum_password_length %> characters minimum)</small>
